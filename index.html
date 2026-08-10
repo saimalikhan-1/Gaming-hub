@@ -1,1 +1,305 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Vault | Free Games Download & Play</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding-bottom: 40px;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 15px auto;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .search-container input:focus {
+            border-color: var(--accent);
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .game-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s;
+        }
+
+        .game-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            background-color: #000;
+        }
+
+        .card-content {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .card-category {
+            font-size: 0.75rem;
+            background: var(--bg-color);
+            color: var(--accent);
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            width: fit-content;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .btn-download {
+            background-color: var(--accent);
+            color: #fff;
+        }
+
+        .btn-download:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-play {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-play:hover {
+            background-color: var(--bg-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🎮 Game Vault</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search games by title..." onkeyup="filterGames()">
+        </div>
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterCategory('all', this)">All</button>
+            <button class="filter-btn" onclick="filterCategory('Action', this)">Action</button>
+            <button class="filter-btn" onclick="filterCategory('Racing', this)">Racing</button>
+            <button class="filter-btn" onclick="filterCategory('RPG', this)">RPG</button>
+            <button class="filter-btn" onclick="filterCategory('Arcade', this)">Arcade</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="game-grid" id="gameGrid">
+            
+            <!-- GAME CARD 1 -->
+            <div class="game-card" data-category="Action" data-title="cyber runner">
+                <img src="https://picsum.photos/400/220?random=1" alt="Cyber Runner">
+                <div class="card-content">
+                    <span class="card-category">Action</span>
+                    <h2 class="card-title">Cyber Runner 2099</h2>
+                    <p class="card-desc">Fast-paced sci-fi endless runner with neon aesthetic and high-speed gameplay.</p>
+                    <div class="card-actions">
+                        <a href="YOUR_DOWNLOAD_LINK_HERE" class="btn btn-download" target="_blank">Download</a>
+                        <a href="YOUR_PLAY_LINK_HERE" class="btn btn-play" target="_blank">Play Online</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GAME CARD 2 -->
+            <div class="game-card" data-category="Racing" data-title="pixel racer">
+                <img src="https://picsum.photos/400/220?random=2" alt="Pixel Racer">
+                <div class="card-content">
+                    <span class="card-category">Racing</span>
+                    <h2 class="card-title">Pixel Racer Turbo</h2>
+                    <p class="card-desc">Retro style 2D racing game featuring customizable cars and challenging tracks.</p>
+                    <div class="card-actions">
+                        <a href="YOUR_DOWNLOAD_LINK_HERE" class="btn btn-download" target="_blank">Download</a>
+                        <a href="YOUR_PLAY_LINK_HERE" class="btn btn-play" target="_blank">Play Online</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GAME CARD 3 -->
+            <div class="game-card" data-category="RPG" data-title="dungeon quest">
+                <img src="https://picsum.photos/400/220?random=3" alt="Dungeon Quest">
+                <div class="card-content">
+                    <span class="card-category">RPG</span>
+                    <h2 class="card-title">Dungeon Quest</h2>
+                    <p class="card-desc">Explore deep dungeons, battle monsters, collect loot, and level up your hero.</p>
+                    <div class="card-actions">
+                        <a href="YOUR_DOWNLOAD_LINK_HERE" class="btn btn-download" target="_blank">Download</a>
+                        <a href="YOUR_PLAY_LINK_HERE" class="btn btn-play" target="_blank">Play Online</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GAME CARD 4 -->
+            <div class="game-card" data-category="Arcade" data-title="space shooter">
+                <img src="https://picsum.photos/400/220?random=4" alt="Space Shooter">
+                <div class="card-content">
+                    <span class="card-category">Arcade</span>
+                    <h2 class="card-title">Galactic Defender</h2>
+                    <p class="card-desc">Classic space arcade shooter. Upgrade your ship and defend the galaxy from invaders.</p>
+                    <div class="card-actions">
+                        <a href="YOUR_DOWNLOAD_LINK_HERE" class="btn btn-download" target="_blank">Download</a>
+                        <a href="YOUR_PLAY_LINK_HERE" class="btn btn-play" target="_blank">Play Online</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let currentCategory = 'all';
+
+        function filterGames() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.game-card');
+
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title');
+                const category = card.getAttribute('data-category');
+
+                const matchesSearch = title.includes(searchQuery);
+                const matchesCategory = (currentCategory === 'all' || category === currentCategory);
+
+                if (matchesSearch && matchesCategory) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function filterCategory(category, button) {
+            currentCategory = category;
+            
+            // Update active button state
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            filterGames();
+        }
+    </script>
+</body>
+</html>
